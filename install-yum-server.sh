@@ -19,7 +19,8 @@ http_proxy=http://賬號:密碼@10.191.131.5:3128/
 export http_proxy
 # 4.準備官方的yum文件
 # 4.1 centos源，系統自帶；為方便版本管理，最好將repo文件中的版本參數改為指定的版本
-# 4.2 epel源，代理情况下默认路径无法识别；需注释掉#mirrorlist，启用baseurl,并将路径更改为baseurl=http://dl.fedoraproject.org/pub/epel/7/$basearch
+# 4.2 epel源;代理情况下默认路径无法识别；需注释掉#mirrorlist，启用baseurl,
+##  并将路径更改为baseurl=http://dl.fedoraproject.org/pub/epel/7/$basearch
 yum install epel-release
 # 4.3 docker源
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
