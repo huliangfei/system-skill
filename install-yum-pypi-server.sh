@@ -70,7 +70,7 @@ vi /etc/cron.d/bandersnatch
 ## http服务与yum共用，略
 
 
-## Client客户端配置
+## Pypi Client客户端配置
 
 #在~/.pip/pip.conf文件中添加或修改
 [global]
