@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## 安装YUM Server
+
 ##用reposync同步YUM源到本地搭建本地YUM源服务器
 ##開始搭建本地yum
 # 1.安裝httpd,createrepo,yum-utils
@@ -44,3 +46,34 @@ createrepo -p -o /data/yum/docker-ce/centos/7 /data/yum/docker-ce/centos/7
 reposync  -r base --norepopath -np /data/yum/centos/7.3.1611/os/
 ##后续自动更新倉庫依賴使用--update参数(-o输出路径)
 createrepo -p -o --update /data/yum/centos/7.3.1611/os/
+
+
+## Pypi Server
+
+#1.安装pip,bandersnatch
+yum install python-pip -y
+pip install bandersnatch
+#2.创建pip包存储路径
+mkdir -p /data/yum/pypi
+#3.执行如下命令初始化，生成相应配置文件
+bandersnatch mirror
+#4.修改配置文件/etc/bandersnatch.conf,改为与aliyun同步
+vi /etc/bandersnatch.conf 
+directory = /data/yum/pypi                       # 要同步的本机目录
+master = http://mirrors.aliyun.com/pypi/simple/  # 要同步的pypi仓库
+workers = 10					                           # 根据服务器情况，可以开多个线程
+#5.开始同步
+bandersnatch mirror
+#6.创建排程，定期更新
+vi /etc/cron.d/bandersnatch
+*/2 * * * * root bandersnatch mirror |& logger -t bandersnatch[mirror]
+## http服务与yum共用，略
+
+
+## Client客户端配置
+
+#在~/.pip/pip.conf文件中添加或修改
+[global]
+index-url = http://10.172.114.204/yum/pypi/
+[install]
+trusted-host=10.172.114.204
