@@ -44,8 +44,8 @@ createrepo -p -o /data/yum/docker-ce/centos/7 /data/yum/docker-ce/centos/7
 # 7.若後續還需要連網更新，可通過定時排程進行
 ##后续同步（-n为newest-only只更新最新的文件）
 reposync  -r base --norepopath -np /data/yum/centos/7.3.1611/os/
-##后续自动更新倉庫依賴使用--update参数(-o输出路径)
-createrepo -p -o --update /data/yum/centos/7.3.1611/os/
+##后续自动更新倉庫依賴使用--update参数
+createrepo --update /data/yum/centos/7.3.1611/os
 
 
 ## Pypi Server
